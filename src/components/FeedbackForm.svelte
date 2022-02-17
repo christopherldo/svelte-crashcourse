@@ -15,7 +15,7 @@
   };
 
   const handleSubmit = () => {
-    if(text.trim().length > min) {
+    if(text.trim().length >= min) {
       const newFeedback = {
         id: uuid(),
         text,
