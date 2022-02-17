@@ -1,11 +1,9 @@
 <script>
-  import {createEventDispatcher} from 'svelte';
+  import {FeedbackStore} from '../store';
   import {v4 as uuid} from 'uuid';
   import Card from './Card.svelte';
   import Button from './Button.svelte';
   import RatingSelect from './RatingSelect.svelte';
-
-  const dispatch = createEventDispatcher();
   
   const min = 10;
 
@@ -24,11 +22,19 @@
         rating: +rating,
       }
 
-      dispatch('add-feedback', newFeedback);
-
+      addFeedback(newFeedback);
       text = '';
     }
-  }
+  };
+
+  const addFeedback = (newFeedback) => {
+    FeedbackStore.update(state => {
+      return [
+        newFeedback,
+        ...state,
+      ];
+    });
+  };
 
   $: btnDisabled = text.trim().length < min;
   $: errorMessage = text.trim().length < min && text.trim().length != 0 ? `Text must be at least ${min} characters long` : '';
