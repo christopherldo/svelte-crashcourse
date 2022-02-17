@@ -6,6 +6,6 @@
 
 <div class="feedback--list">
   {#each feedback as fb (fb.id)}
-    <FeedbackItem item={fb} />
+    <FeedbackItem item={fb} on:delete-feedback />
   {/each}
 </div>
