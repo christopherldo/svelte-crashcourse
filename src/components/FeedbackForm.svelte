@@ -1,13 +1,16 @@
 <script>
+  import {createEventDispatcher} from 'svelte';
   import {v4 as uuid} from 'uuid';
-
   import Card from './Card.svelte';
   import Button from './Button.svelte';
   import RatingSelect from './RatingSelect.svelte';
 
+  const dispatch = createEventDispatcher();
+  
+  const min = 10;
+
   let text = '';
   let rating = '10';
-  let min = 10;
 
   const handleSelect = ({detail}) => {
     rating = detail;
@@ -21,7 +24,9 @@
         rating: +rating,
       }
 
-      console.log(newFeedback);
+      dispatch('add-feedback', newFeedback);
+
+      text = '';
     }
   }
 

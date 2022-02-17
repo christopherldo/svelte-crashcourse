@@ -3,7 +3,7 @@
   import Card from './Card.svelte';
 
   export let item = {};
-
+  
   const dispatch = createEventDispatcher();
 
   const handleDelete = (itemId) => {
