@@ -1,9 +1,29 @@
 <script>
+  import {v4 as uuid} from 'uuid';
+
   import Card from './Card.svelte';
   import Button from './Button.svelte';
+  import RatingSelect from './RatingSelect.svelte';
 
   let text = '';
+  let rating = '10';
   let min = 10;
+
+  const handleSelect = ({detail}) => {
+    rating = detail;
+  };
+
+  const handleSubmit = () => {
+    if(text.trim().length > min) {
+      const newFeedback = {
+        id: uuid(),
+        text,
+        rating: +rating,
+      }
+
+      console.log(newFeedback);
+    }
+  }
 
   $: btnDisabled = text.trim().length < min;
   $: errorMessage = text.trim().length < min && text.trim().length != 0 ? `Text must be at least ${min} characters long` : '';
@@ -13,8 +33,8 @@
   <header>
     <h2>How would you rate your service with us?</h2>
   </header>
-  <form>
-    <!-- Rating Select -->
+  <form on:submit|preventDefault={handleSubmit}>
+    <RatingSelect on:rating-select={handleSelect} />
     <div class="input-group">
       <input type="text" bind:value={text} placeholder="Tell us something that keeps you coming back">
       <Button disabled={btnDisabled} type="submit">Send</Button>
